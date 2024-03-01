@@ -1,33 +1,45 @@
 def create_file(filename)
-  File.open(filename, 'w') do |file|
-    puts "File #{filename} created."
+  begin
+    File.open(filename, 'w') do |file|
+      puts "File #{filename} created."
+    end
+  rescue StandardError => e
+    puts "Error creating file: #{e.message}"
   end
 end
 
 def open_file(filename)
-  if File.exist?(filename)
-    File.open(filename, 'r') do |file|
-      puts "File contents #{filename}:"
-      puts file.read
+  begin
+    if File.exist?(filename)
+      File.open(filename, 'r') do |file|
+        puts "File contents #{filename}:"
+        puts file.read
+      end
+    else
+      puts "File #{filename} does not exist."
     end
-  else
-    puts "File #{filename} does not exist."
+  rescue StandardError => e
+    puts "Error opening file: #{e.message}"
   end
 end
 
 def write_to_file(filename, content)
-  File.open(filename, 'a') do |file|
-    file.puts content
+  begin
+    File.open(filename, 'a') do |file|
+      file.puts content
+    end
+    puts "Data written to file #{filename}."
+  rescue StandardError => e
+    puts "Error writing to file: #{e.message}"
   end
-  puts "Data written to file #{filename}."
 end
 
 def main_menu
-  puts "Simple text editor"
+  puts "\nSimple text editor"
   puts "1. Create a new file"
   puts "2. Open an existing file"
   puts "3. Add text to file"
-  puts "4. exit"
+  puts "4. Exit"
 end
 
 loop do
